@@ -7,6 +7,8 @@ CLI submitter and algorithm validator for IMC Prosperity competition.
 
 `imc-prospector` combines a static analysis checker with a command-line submitter to validate and submit your IMC Prosperity trading algorithms.
 
+> **Note**: The CLI submitter is based on [jmerle/imc-prosperity-3-submitter](https://github.com/jmerle/imc-prosperity-3-submitter).
+
 ## Features
 
 - **Static Analysis Checker**: Validates your algorithm against IMC Prosperity requirements before submission
