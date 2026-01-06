@@ -1,6 +1,5 @@
 """CLI entry point for imc-prospector."""
 
-import json
 import sys
 from datetime import datetime
 from importlib import metadata
@@ -9,7 +8,7 @@ from typing import Annotated, Optional
 
 from typer import Argument, Option, Typer
 
-from imcprospector.checker import ProsperityChecker, CheckResult, Severity
+from imcprospector.checker import ProsperityChecker, Severity
 from imcprospector.submit import submit
 
 app = Typer(context_settings={"help_option_names": ["--help", "-h"]}, name="imc-prospector")
@@ -47,7 +46,7 @@ def check(
         bool,
         Option("--strict", help="Treat warnings as errors"),
     ] = False,
-    json: Annotated[
+    json_output: Annotated[
         bool,
         Option("--json", help="Output JSON (no prompt)"),
     ] = False,
@@ -65,14 +64,16 @@ def check(
     ] = False,
 ) -> None:
     """Check an IMC Prosperity algorithm for compliance."""
+    import json
+
     from imcprospector.checker import load_config
-    import yaml
 
     config_dict = load_config(config)
 
     if dump_config:
         try:
             import yaml as yaml_lib
+
             print(yaml_lib.dump(config_dict, default_flow_style=False))
         except ImportError:
             print(json.dumps(config_dict, indent=2))
@@ -87,7 +88,7 @@ def check(
     error_count = sum(1 for i in result.issues if i.severity == Severity.ERROR)
     warning_count = sum(1 for i in result.issues if i.severity == Severity.WARNING)
 
-    if json:
+    if json_output:
         output = result.to_dict()
         output["error_count"] = error_count
         output["warning_count"] = warning_count
@@ -132,7 +133,7 @@ def check(
     if no_prompt or not sys.stdin.isatty():
         sys.exit(1 if error_count > 0 else 0)
 
-    response = input(f"Continue anyway? [y/N]: ").strip().lower()
+    response = input("Continue anyway? [y/N]: ").strip().lower()
     if response in ('y', 'yes'):
         print("Continuing...\n")
         sys.exit(0)

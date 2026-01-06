@@ -2,8 +2,8 @@
 
 __version__ = "0.1.0"
 
-from imcprospector.checker import ProsperityChecker, CheckResult, Issue, Severity
-from imcprospector.submit import submit_algorithm, get_current_round
+from imcprospector.checker import CheckResult, Issue, ProsperityChecker, Severity
+from imcprospector.submit import get_current_round, submit_algorithm
 
 __all__ = [
     "ProsperityChecker",

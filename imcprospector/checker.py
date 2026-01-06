@@ -7,12 +7,10 @@ Supports YAML configuration for customizing allowed imports and severity levels.
 """
 
 import ast
-import json
-import os
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Union
+from typing import Dict, List, Optional, Set, Union
 
 # Try to import yaml, fall back to defaults if not available
 try:
