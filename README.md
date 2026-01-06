@@ -3,7 +3,7 @@
 [![PyPI](https://github.com/arJ-V/imc-prospector/actions/workflows/publish.yml/badge.svg)](https://github.com/arJ-V/imc-prospector/actions/workflows/publish.yml)
 [![CI](https://github.com/arJ-V/imc-prospector/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/arJ-V/imc-prospector/actions/workflows/ci.yml)
 
-CLI submitter and algorithm validator for IMC Prosperity competition.
+CLI submitter and algorithm validator package for IMC Prosperity competition.
 
 `imc-prospector` combines a static analysis checker with a command-line submitter to validate and submit your IMC Prosperity trading algorithms.
 
@@ -14,8 +14,6 @@ CLI submitter and algorithm validator for IMC Prosperity competition.
 - **Static Analysis Checker**: Validates your algorithm against IMC Prosperity requirements before submission
 - **CLI Submitter**: Submit algorithms directly from the command line
 - **Configurable**: Customize allowed imports and severity levels via YAML config
-- **Secure**: Uses system keyring for token storage
-- **PyPI Package**: Easy installation via pip
 
 ## Installation
 
