@@ -41,8 +41,8 @@ imc-prospector = "imcprospector.__main__:main"
 imcprospector = "imcprospector.__main__:main"
 
 [project.urls]
-Repository = "https://github.com/arjunverma/imc-prospector"
-Issues = "https://github.com/arjunverma/imc-prospector/issues"
+Repository = "https://github.com/arJ-V/imc-prospector"
+Issues = "https://github.com/arJ-V/imc-prospector/issues"
 
 [build-system]
 requires = ["setuptools >= 61.0", "wheel"]
