@@ -5,7 +5,7 @@ version = "0.1.0"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
-    {name = "arJ-V", email = ""}
+    {name = "arJ-V"}
 ]
 keywords = ["imc", "prosperity", "submit", "submitter", "checker", "validator", "trading", "algorithm"]
 classifiers = [
