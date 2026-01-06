@@ -1,16 +1,19 @@
 # imc-prospector
 
+[![PyPI](https://github.com/arJ-V/imc-prospector/actions/workflows/publish.yml/badge.svg)](https://github.com/arJ-V/imc-prospector/actions/workflows/publish.yml)
+[![CI](https://github.com/arJ-V/imc-prospector/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/arJ-V/imc-prospector/actions/workflows/ci.yml)
+
 CLI submitter and algorithm validator for IMC Prosperity competition.
 
-`imc-prospector` combines a static analysis checker with a command-line submitter to help you validate and submit your IMC Prosperity trading algorithms with confidence.
+`imc-prospector` combines a static analysis checker with a command-line submitter to validate and submit your IMC Prosperity trading algorithms.
 
 ## Features
 
-- ✅ **Static Analysis Checker**: Validates your algorithm against IMC Prosperity requirements before submission
-- 🚀 **CLI Submitter**: Submit algorithms directly from the command line
-- ⚙️ **Configurable**: Customize allowed imports and severity levels via YAML config
-- 🔒 **Secure**: Uses system keyring for token storage
-- 📦 **PyPI Package**: Easy installation via pip
+- **Static Analysis Checker**: Validates your algorithm against IMC Prosperity requirements before submission
+- **CLI Submitter**: Submit algorithms directly from the command line
+- **Configurable**: Customize allowed imports and severity levels via YAML config
+- **Secure**: Uses system keyring for token storage
+- **PyPI Package**: Easy installation via pip
 
 ## Installation
 
@@ -67,15 +70,15 @@ imc-prospector submit my_trader.py --no-out
 imc-prospector submit my_trader.py --config custom.yaml --strict
 ```
 
-## What the Checker Validates
+## What Gets Checked
 
-| Category | Checks |
-|----------|--------|
-| **Structure** | `Trader` class exists, `run(self, state)` method present |
-| **Imports** | Only official allowed libraries (pandas, numpy, statistics, math, typing, jsonpickle) |
-| **Return** | Must return 3-tuple `(result, conversions, traderData)` |
-| **Timeouts** | Catches infinite loops, `time.sleep()`, deep nesting |
-| **State** | Warns about instance variables (Lambda is stateless) |
+The checker validates several aspects of your algorithm:
+
+- **Structure**: Ensures `Trader` class exists with a `run(self, state)` method
+- **Imports**: Verifies only official allowed libraries are used (pandas, numpy, statistics, math, typing, jsonpickle)
+- **Return**: Confirms the method returns a 3-tuple `(result, conversions, traderData)`
+- **Timeouts**: Detects infinite loops, `time.sleep()` calls, and deep nesting that could cause timeouts
+- **State**: Warns about instance variables that won't persist (Lambda is stateless)
 
 ## Configuration
 
@@ -152,30 +155,25 @@ The token is stored securely and you'll only need to update it when it expires.
 | `--out`, `-o` | Specify output log file path |
 | `--no-out` | Don't download submission logs |
 
-## Handling Checker Errors and Warnings
+## Handling Errors and Warnings
 
-When submitting, the checker runs automatically and handles issues as follows:
+When submitting, the checker runs automatically. By default:
 
-- **Errors**: Block submission by default. Use `--force` to bypass (not recommended).
-- **Warnings**: Prompt for confirmation. Use `--force` to skip the prompt and continue automatically.
+- **Errors** block submission. Use `--force` to bypass (not recommended).
+- **Warnings** prompt for confirmation. Use `--force` to skip the prompt.
 
-**Example:**
+Example when errors are found:
+
 ```bash
-# Checker finds errors - submission blocked
 $ imc-prospector submit my_trader.py
 Running algorithm checker...
-❌ Checker found 2 error(s) and 1 warning(s):
-  ❌ [E001]:5 Forbidden import: 'os'
-  ❌ [E033]:45 run() returns only a dict, must return 3-tuple
-  ⚠️  [W040]:10 Instance vars {'position'} may not persist
+Checker found 2 error(s) and 1 warning(s):
+  [E001]:5 Forbidden import: 'os'
+  [E033]:45 run() returns only a dict, must return 3-tuple
+  [W040]:10 Instance vars {'position'} may not persist
 
-❌ Submission aborted due to errors. Fix issues and try again.
+Submission aborted due to errors. Fix issues and try again.
    Use --force to bypass errors (not recommended).
-
-# Force submission despite errors (use with caution)
-$ imc-prospector submit my_trader.py --force
-Running algorithm checker...
-⚠️  Errors found but --force flag used. Continuing with submission...
 ```
 
 ## Error Codes
@@ -208,11 +206,11 @@ Running algorithm checker...
 
 ERRORS (2):
 ----------------------------------------
-  ❌ [E001]:2 Forbidden import: 'os'
-   💡 Remove 'import os'. Official allowed: pandas, numpy, statistics, math, typing, jsonpickle
+  [E001]:2 Forbidden import: 'os'
+   Remove 'import os'. Official allowed: pandas, numpy, statistics, math, typing, jsonpickle
 
-  ❌ [E033]:45 run() returns only a dict, must return 3-tuple
-   💡 return result, conversions, traderData
+  [E033]:45 run() returns only a dict, must return 3-tuple
+   return result, conversions, traderData
 
 ============================================================
 Official requirements:
@@ -267,5 +265,4 @@ MIT
 
 ## Acknowledgments
 
-- Based on the checker from `imc-prospector` and submitter structure from `imc-prosperity-3-submitter`
-- Uses the same API endpoint as the official Prosperity platform
+Built on top of the submitter structure from `imc-prosperity-3-submitter`. Uses the same API endpoint as the official Prosperity platform.
